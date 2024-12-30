@@ -1,0 +1,59 @@
+@baseUrl = http://localhost:3333
+@token = {{autenticate.response.body.access_token}}
+@id = 25da946a-69f1-4f3f-a80a-5fa0ac7f5fa1
+
+# @name create_account
+POST {{baseUrl}}/accounts
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "johndoe@gmail.com",
+    "password": "123456",
+    "cpf": "12345678900"
+}
+
+###
+
+# @name autenticate
+POST {{baseUrl}}/sessions
+Content-Type: application/json
+
+{
+    "email": "johndoe@gmail.com",
+    "password": "123456"
+}
+
+###
+
+# @name create_cars
+POST {{baseUrl}}/cars
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "mark": "Ford",
+    "model": "Mustang",
+    "year": 1969,
+    "color": "Vermelho",
+    "price": 100000
+}
+
+###
+
+# @name list_cars
+GET {{baseUrl}}/cars/sold
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+
+# @name list_cars_unsold
+GET {{baseUrl}}/cars/unsold
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+# @name sell_car
+PUT {{baseUrl}}/cars/sold/{{id}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
